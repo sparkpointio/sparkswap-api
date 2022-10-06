@@ -39,7 +39,7 @@ app.get('/api/airdrop/:merkle', async function(req, res) {
   }
 })
 
-app.get('/api/airdrop/:merkle/claims/:address', async function(req, res) {
+app.get('/api/airdrop/:merkle/:address', async function(req, res) {
   try{
     const filePath = path.join(process.cwd(), 'src', 'merkle-root-airdrop' , `${req.params.merkle}.json`);
     const file = fs.readFileSync(filePath, 'utf8');
