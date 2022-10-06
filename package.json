@@ -1,0 +1,26 @@
+{
+  "name": "sparkswap-api",
+  "version": "1.0.0",
+  "description": "General API for SparkSwap Platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "moment": "^2.22.2"
+  },
+  "devDependencies": {
+    "commander": "^6.1.0",
+    "request": "^2.88.2",
+    "tape": "^4.7.0"
+  },
+  "engines": {
+    "node": "16.13.0"
+  }
+}
