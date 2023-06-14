@@ -70,15 +70,15 @@ app.get('/api/goerli-gasprice2', async function(req, res) {
 
     let response = await axios(config);
     let history = response['data']['result'];
-    let returndata = [];
+    let returndata = {};
     // Convert base fee to decimal Gwei
     history['baseFeePerGas'] = history['baseFeePerGas'].map(x => parseInt(x) / 10 ** 9);
 
     // Convert block numnber to decimal
     history['oldestBlock'] = parseInt(history['oldestBlock'])
 
-    returndata['high'] = findHighest(history['baseFeePerGas']).toFixed(0)
-    returndata['low'] = findLowest(history['baseFeePerGas']).toFixed(0)
+    returndata['high'] = parseInt(findHighest(history['baseFeePerGas']).toFixed(0))
+    returndata['low'] = parseInt(findLowest(history['baseFeePerGas']).toFixed(0))
 
     // Print formatted history
     res.send(returndata);
