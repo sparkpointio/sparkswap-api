@@ -5,6 +5,7 @@ const dotenv = require("dotenv")
 const request = require('request')
 const fs = require("fs")
 const axios = require('axios')
+const cors = require('cors')
 
 dotenv.config();
 
@@ -14,6 +15,9 @@ const app = express()
   .set('port', PORT)
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
+
+// use cors
+app.use(cors())
 
 // Static public files
 app.use(express.static(path.join(__dirname, 'public')))
