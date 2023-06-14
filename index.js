@@ -81,8 +81,10 @@ app.get('/api/goerli-gasprice2', async function(req, res) {
     // Convert block numnber to decimal
     history['oldestBlock'] = parseInt(history['oldestBlock'])
 
-    returndata['high'] = parseInt(findHighest(history['baseFeePerGas']).toFixed(0))
-    returndata['low'] = parseInt(findLowest(history['baseFeePerGas']).toFixed(0))
+    returndata['instant'] = parseInt(findHighest(history['baseFeePerGas']).toFixed(0))
+    returndata['fast'] = parseInt(findHighest(history['baseFeePerGas']).toFixed(0))
+    returndata['standard'] = parseInt(findLowest(history['baseFeePerGas']).toFixed(0))
+    returndata['slow'] = parseInt(findLowest(history['baseFeePerGas']).toFixed(0))
 
     // Print formatted history
     res.send(returndata);
