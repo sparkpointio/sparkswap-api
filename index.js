@@ -40,6 +40,10 @@ const findHighest = (numbers) => {
   return Math.max(...numbers);
 }
 
+const findLowest = (numbers) => {
+  return Math.min(...numbers);
+}
+
 app.get('/api/goerli-gasprice2', async function(req, res) {
   try {
     const baseUrl = "https://goerli.infura.io/v3/b1162cfa8cc8486dbdff5d0fa6601676";
@@ -66,16 +70,18 @@ app.get('/api/goerli-gasprice2', async function(req, res) {
 
     let response = await axios(config);
     let history = response['data']['result'];
+    let returndata = [];
     // Convert base fee to decimal Gwei
     history['baseFeePerGas'] = history['baseFeePerGas'].map(x => parseInt(x) / 10 ** 9);
 
     // Convert block numnber to decimal
     history['oldestBlock'] = parseInt(history['oldestBlock'])
 
-    history['highest'] = findHighest(history['baseFeePerGas']).toFixed(0)
+    returndata['high'] = findHighest(history['baseFeePerGas']).toFixed(0)
+    returndata['low'] = findLowest(history['baseFeePerGas']).toFixed(0)
 
     // Print formatted history
-    res.send(history);
+    res.send(returndata);
 
 
   } catch (error) {
