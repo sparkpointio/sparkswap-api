@@ -4,6 +4,7 @@ const moment = require('moment')
 const dotenv = require("dotenv")
 const request = require('request')
 const fs = require("fs")
+const axios = require('axios')
 
 dotenv.config();
 
@@ -23,6 +24,16 @@ app.get('/', function(req, res) {
 
 app.get('/', function(req, res) {
   res.send('SparkSwap API!');
+})
+
+app.get('/api/goerli-gasprice', async function(req, res) {
+  try {
+    const response = await axios.get('https://api.nodereal.io/node/gasInfo');
+    res.send(response.data.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to fetch data from API');
+  }
 })
 
 app.get('/api/airdrop/:merkle', async function(req, res) {
