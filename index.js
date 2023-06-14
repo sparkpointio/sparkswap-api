@@ -36,6 +36,54 @@ app.get('/api/goerli-gasprice', async function(req, res) {
   }
 })
 
+const findHighest = (numbers) => {
+  return Math.max(...numbers);
+}
+
+app.get('/api/goerli-gasprice2', async function(req, res) {
+  try {
+    const baseUrl = "https://goerli.infura.io/v3/b1162cfa8cc8486dbdff5d0fa6601676";
+
+    let data = JSON.stringify({
+        "jsonrpc": "2.0",
+        "method": "eth_feeHistory",
+        "params": [
+            "0x5",
+            "latest",
+            []
+        ],
+        "id": 1
+    });
+
+    var config = {
+        method: 'post',
+        url: baseUrl,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
+
+    let response = await axios(config);
+    let history = response['data']['result'];
+    // Convert base fee to decimal Gwei
+    history['baseFeePerGas'] = history['baseFeePerGas'].map(x => parseInt(x) / 10 ** 9);
+
+    // Convert block numnber to decimal
+    history['oldestBlock'] = parseInt(history['oldestBlock'])
+
+    history['highest'] = findHighest(history['baseFeePerGas']).toFixed(2)
+
+    // Print formatted history
+    res.send(history);
+
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to fetch data from API');
+  }
+})
+
 app.get('/api/airdrop/:merkle', async function(req, res) {
   try{
     const filePath = path.join(process.cwd(), 'src', 'merkle-root-airdrop' , `${req.params.merkle}.json`);
