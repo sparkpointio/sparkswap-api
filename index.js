@@ -22,6 +22,10 @@ app.get('/', function(req, res) {
   res.send('SparkSwap API!');
 })
 
+app.get('/api', function(req, res) {
+  res.send('SparkSwap API!');
+})
+
 app.get('/api/goerli-gasprice', async function(req, res) {
   try {
     const response = await axios.get('https://api.nodereal.io/node/gasInfo');
